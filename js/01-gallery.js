@@ -21,8 +21,7 @@ function makeGalleryMarkUp(images) {
     .join("");
 }
 
-const galleryMarkUp = makeGalleryMarkUp(galleryItems);
-galleryRef.innerHTML = galleryMarkUp;
+galleryRef.insertAdjacentHTML("beforeend", makeGalleryMarkUp(galleryItems));
 
 function handleImageClick(event) {
   stopDefaultActions(event);
@@ -34,8 +33,9 @@ function handleImageClick(event) {
   const instance = basicLightbox.create(
     `<img src='${event.target.dataset.source}' width='800', height ='600'>`
   );
-  instance.show(),
-    galleryRef.addEventListener("keydown", handleModalWindowCloseOnEscape);
+  instance.show();
+
+  galleryRef.addEventListener("keydown", handleModalWindowCloseOnEscape);
 
   function handleModalWindowCloseOnEscape(event) {
     if (event.code === "Escape") {
