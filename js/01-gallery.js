@@ -31,16 +31,24 @@ function handleImageClick(event) {
   }
 
   const instance = basicLightbox.create(
-    `<img src='${event.target.dataset.source}' width='800', height ='600'>`
+    `<img src='${event.target.dataset.source}' width='800', height ='600'>`,
+    {
+      onShow: () => {
+        galleryRef.addEventListener("keydown", handleModalWindowCloseOnEscape);
+      },
+      onClose: () => {
+        galleryRef.removeEventListener(
+          "keydown",
+          handleModalWindowCloseOnEscape
+        );
+      },
+    }
   );
   instance.show();
-
-  galleryRef.addEventListener("keydown", handleModalWindowCloseOnEscape);
 
   function handleModalWindowCloseOnEscape(event) {
     if (event.code === "Escape") {
       instance.close();
-      galleryRef.removeEventListener("keydown", handleModalWindowCloseOnEscape);
     }
   }
 }
